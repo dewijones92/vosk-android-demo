@@ -14,6 +14,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/recognize_microphone"/>
+    <Button
+        android:id="@+id/shutdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="shutdown"/>
     <TextView
         android:id="@+id/result_text"
         android:layout_width="fill_parent"

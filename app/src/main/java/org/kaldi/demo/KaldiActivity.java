@@ -58,6 +58,10 @@ public class KaldiActivity extends Activity implements
     private SpeechService speechService;
     TextView resultView;
 
+    private void log(String text) {
+        Log.d("VOSK_DEMO", text);
+    }
+
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
@@ -78,6 +82,14 @@ public class KaldiActivity extends Activity implements
             @Override
             public void onClick(View view) {
                 recognizeMicrophone();
+            }
+        });
+
+        findViewById(R.id.shutdown).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                log("shutdown");
+                shutdown();
             }
         });
 
@@ -189,20 +201,29 @@ public class KaldiActivity extends Activity implements
     public void onDestroy() {
         super.onDestroy();
 
+
+    }
+
+    private void shutdown() {
         if (speechService != null) {
             speechService.cancel();
             speechService.shutdown();
+            speechService = null;
         }
     }
 
 
     @Override
     public void onResult(String hypothesis) {
+        log("onResult");
+        log(hypothesis);
         resultView.append(hypothesis + "\n");
     }
 
     @Override
     public void onPartialResult(String hypothesis) {
+        log("onPartialResult");
+        log(hypothesis);
         resultView.append(hypothesis + "\n");
     }
 
