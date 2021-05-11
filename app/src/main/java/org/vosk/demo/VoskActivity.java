@@ -18,6 +18,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.method.ScrollingMovementMethod;
 import android.widget.Button;
 import android.widget.TextView;
@@ -32,6 +33,7 @@ import org.vosk.android.SpeechService;
 import org.vosk.android.SpeechStreamService;
 import org.vosk.android.StorageService;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -70,24 +72,36 @@ public class VoskActivity extends Activity implements
         ((ToggleButton) findViewById(R.id.pause)).setOnCheckedChangeListener((view, isChecked) -> pause(isChecked));
 
         LibVosk.setLogLevel(LogLevel.INFO);
+        String[] permissionArray = new String[]{
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        };
 
         // Check if user has given permission to record audio, init the model after permission is granted
         int permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO);
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, PERMISSIONS_REQUEST_RECORD_AUDIO);
+        if (true || permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, permissionArray, PERMISSIONS_REQUEST_RECORD_AUDIO);
         } else {
             initModel();
         }
     }
 
     private void initModel() {
-        StorageService.unpack(this, "model-en-us", "model",
+      //  ZipExtractor.walk(   new File (ZipExtractor.Base_Path));
+        this.model = new Model(ZipExtractor.full_path);
+/*        StorageService.unpack(this, "model-en-us", "model",
                 (model) -> {
                     this.model = model;
                     setUiState(STATE_READY);
                 },
                 (exception) -> setErrorState("Failed to unpack the model" + exception.getMessage()));
+ */
+        setUiState(STATE_READY);
+
+
     }
+
 
 
     @Override
