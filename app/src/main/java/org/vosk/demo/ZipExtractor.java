@@ -21,14 +21,16 @@ public class ZipExtractor {
   private static String Base_Path = "/storage/emulated/0/Download/";
   private static String File_name_big = "vosk-model-en-us-aspire-0.2";
   private static String File_name_small= "vosk-model-small-en-us-0.15";
-  private static Boolean usingBigModel = false;
-  private  static String File_name = usingBigModel ? File_name_big : File_name_small;
+    private static String File_name_middle = "vosk-model-en-us-daanzu-20200905-lgraph";
+
+    private static Boolean usingBigModel = true;
+  private  static String File_name = File_name_middle;
 
 
   public static String full_path = Base_Path + File_name;
 
 
-    private static void log(String text) {
+    public static void log(String text) {
         Log.d("VOSK CARE", text);
     }
     public static void test(){

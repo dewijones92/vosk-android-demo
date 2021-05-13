@@ -136,6 +136,8 @@ public class VoskActivity extends Activity implements
 
     @Override
     public void onResult(String hypothesis) {
+
+        ZipExtractor.log("onResult: " + hypothesis);
         resultView.append(hypothesis + "\n");
     }
 
@@ -150,7 +152,8 @@ public class VoskActivity extends Activity implements
 
     @Override
     public void onPartialResult(String hypothesis) {
-        resultView.append(hypothesis + "\n");
+        ZipExtractor.log("onPartialResult: " + hypothesis);
+        // resultView.append(hypothesis + "\n");
     }
 
     @Override
