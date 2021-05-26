@@ -1,4 +1,4 @@
-// Copyright 2019 Alpha Cephei Inc.
+    // Copyright 2019 Alpha Cephei Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@ import org.vosk.android.SpeechStreamService;
 import org.vosk.android.StorageService;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -153,7 +154,7 @@ public class VoskActivity extends Activity implements
     @Override
     public void onPartialResult(String hypothesis) {
         ZipExtractor.log("onPartialResult: " + hypothesis);
-        // resultView.append(hypothesis + "\n");
+         resultView.append(hypothesis + "\n");
     }
 
     @Override
@@ -223,11 +224,10 @@ public class VoskActivity extends Activity implements
         } else {
             setUiState(STATE_FILE);
             try {
-                Recognizer rec = new Recognizer(model, 16000.f, "[\"one zero zero zero one\", " +
-                        "\"oh zero one two three four five six seven eight nine\", \"[unk]\"]");
+                Recognizer rec = new Recognizer(model, 16000.f);
 
-                InputStream ais = getAssets().open(
-                        "10001-90210-01803.wav");
+                InputStream ais = new FileInputStream(
+                        "/storage/emulated/0/Download/test16.wav");
                 if (ais.skip(44) != 44) throw new IOException("File too short");
 
                 speechStreamService = new SpeechStreamService(rec, ais, 16000);

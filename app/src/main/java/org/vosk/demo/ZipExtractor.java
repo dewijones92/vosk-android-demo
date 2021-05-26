@@ -31,7 +31,7 @@ public class ZipExtractor {
 
 
     public static void log(String text) {
-        Log.d("VOSK CARE", text);
+        Log.d("VOSK LOG", text);
     }
     public static void test(){
       File file22 = new File(full_path);
